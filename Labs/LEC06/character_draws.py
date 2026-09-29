@@ -8,8 +8,6 @@ character = load_image('character.png')
 
 
 def move_circle():
-    print("circle")
-
     for deg in range(0, 360, 5):
         rad = math.radians(deg)
 
@@ -47,7 +45,6 @@ def draw_left():
 
 
 def move_rectangle():
-    print("rectangle")
     draw_top()
     draw_right()
     draw_bottom()
@@ -78,7 +75,6 @@ def draw_c():
 
 
 def move_triangle():
-    print("triangle")
     draw_a()
     draw_b()
     draw_c()
