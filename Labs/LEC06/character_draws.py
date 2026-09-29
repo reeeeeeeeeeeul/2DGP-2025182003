@@ -80,6 +80,8 @@ def draw_c():
         x = 600 - i * 0.5
         y = 500 - i
 
+        draw_character(x, y)
+
 
 def move_triangle():
     print("triangle")
