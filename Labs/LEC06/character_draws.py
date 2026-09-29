@@ -70,6 +70,8 @@ def draw_b():
     for x in range(200, 601, 5):
         y = 500
 
+        draw_character(x, y)
+
 
 def draw_c():
     print("c")
