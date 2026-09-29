@@ -51,12 +51,15 @@ def move_rectangle():
 
 
 def draw_a():
+    print("a")
     pass
 
 def draw_b():
+    print("b")
     pass
 
 def draw_c():
+    print("c")
     pass
 
 def move_triangle():
