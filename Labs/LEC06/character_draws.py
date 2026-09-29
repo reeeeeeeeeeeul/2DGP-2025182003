@@ -66,7 +66,9 @@ def draw_a():
 
 def draw_b():
     print("b")
-    pass
+
+    for x in range(200, 601, 5):
+        y = 500
 
 
 def draw_c():
