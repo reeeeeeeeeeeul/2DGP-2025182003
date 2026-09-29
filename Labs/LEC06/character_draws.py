@@ -1,4 +1,5 @@
 import math
+
 from pico2d import *
 
 open_canvas(800, 600)
@@ -8,10 +9,13 @@ character = load_image('character.png')
 
 def move_circle():
     print("circle")
+
     for deg in range(0, 360, 5):
         rad = math.radians(deg)
+
         x = 400 + 200 * math.cos(rad)
         y = 400 + 200 * math.sin(rad)
+
         draw_character(x, y)
 
 
@@ -52,15 +56,21 @@ def move_rectangle():
 
 def draw_a():
     print("a")
-    pass
+
+    for i in range(0, 401, 5):
+        x = 400 - i * 0.5
+        y = 100 + i
+
 
 def draw_b():
     print("b")
     pass
 
+
 def draw_c():
     print("c")
     pass
+
 
 def move_triangle():
     print("triangle")
