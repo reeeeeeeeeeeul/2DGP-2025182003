@@ -75,7 +75,10 @@ def draw_b():
 
 def draw_c():
     print("c")
-    pass
+
+    for i in range(0, 401, 5):
+        x = 600 - i * 0.5
+        y = 500 - i
 
 
 def move_triangle():
