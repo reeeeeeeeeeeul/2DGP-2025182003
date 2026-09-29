@@ -50,9 +50,20 @@ def move_rectangle():
     draw_left()
 
 
+def draw_a():
+    pass
+
+def draw_b():
+    pass
+
+def draw_c():
+    pass
+
 def move_triangle():
     print("triangle")
-    pass
+    draw_a()
+    draw_b()
+    draw_c()
 
 
 while True:
