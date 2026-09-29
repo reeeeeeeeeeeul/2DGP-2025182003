@@ -20,9 +20,29 @@ def move_circle():
     pass
 
 
+def draw_top():
+    print("top")
+    pass
+
+def draw_right():
+    print("right")
+    pass
+
+def draw_bottom():
+    print("bottom")
+    pass
+
+def draw_left():
+    print("left")
+    pass
+
 
 def move_rectangle():
     print("rectangle")
+    draw_top()
+    draw_right()
+    draw_bottom()
+    draw_left()
     pass
 
 def move_triangle():
