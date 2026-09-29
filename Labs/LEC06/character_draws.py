@@ -61,6 +61,8 @@ def draw_a():
         x = 400 - i * 0.5
         y = 100 + i
 
+        draw_character(x, y)
+
 
 def draw_b():
     print("b")
