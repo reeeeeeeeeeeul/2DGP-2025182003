@@ -55,8 +55,6 @@ def move_rectangle():
 
 
 def draw_a():
-    print("a")
-
     for i in range(0, 401, 5):
         x = 400 - i * 0.5
         y = 100 + i
@@ -65,8 +63,6 @@ def draw_a():
 
 
 def draw_b():
-    print("b")
-
     for x in range(200, 601, 5):
         y = 500
 
@@ -74,8 +70,6 @@ def draw_b():
 
 
 def draw_c():
-    print("c")
-
     for i in range(0, 401, 5):
         x = 600 - i * 0.5
         y = 500 - i
