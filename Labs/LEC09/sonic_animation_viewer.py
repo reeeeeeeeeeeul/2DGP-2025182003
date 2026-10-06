@@ -21,29 +21,29 @@ def resource_path(file_name):
     return Path(__file__).resolve().parent / file_name
 
 
-def make_row_frames(top, frame_count):
-    source_y = SPRITE_SHEET_HEIGHT - top - FRAME_HEIGHT
+def make_row_frames(top, frame_count, frame_height):
+    source_y = SPRITE_SHEET_HEIGHT - top - frame_height
     return [
         (
             index * FRAME_WIDTH,
             source_y,
             min(FRAME_WIDTH, SPRITE_SHEET_WIDTH - index * FRAME_WIDTH),
-            FRAME_HEIGHT,
+            frame_height,
         )
         for index in range(frame_count)
     ]
 
 
 ANIMATIONS = [
-    ('walk', make_row_frames(35, 10), FRAME_DURATION),
-    ('run', make_row_frames(83, 10), FRAME_DURATION),
-    ('jump', make_row_frames(126, 7), FRAME_DURATION),
-    ('roll', make_row_frames(174, 8), FRAME_DURATION),
-    ('spin', make_row_frames(222, 6), FRAME_DURATION),
-    ('crouch', make_row_frames(271, 7), FRAME_DURATION),
-    ('fall', make_row_frames(319, 7), FRAME_DURATION),
-    ('back', make_row_frames(367, 7), FRAME_DURATION),
-    ('idle', make_row_frames(414, 8), FRAME_DURATION),
+    ('walk', make_row_frames(35, 10, 45), FRAME_DURATION),
+    ('run', make_row_frames(83, 10, 42), FRAME_DURATION),
+    ('jump', make_row_frames(126, 7, 42), FRAME_DURATION),
+    ('roll', make_row_frames(170, 8, 46), FRAME_DURATION),
+    ('spin', make_row_frames(220, 6, 45), FRAME_DURATION),
+    ('crouch', make_row_frames(269, 7, 43), FRAME_DURATION),
+    ('fall', make_row_frames(318, 7, 42), FRAME_DURATION),
+    ('back', make_row_frames(365, 7, 47), FRAME_DURATION),
+    ('idle', make_row_frames(414, 8, 44), FRAME_DURATION),
 ]
 
 
