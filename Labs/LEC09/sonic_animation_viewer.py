@@ -99,6 +99,7 @@ def main():
     frame_index = 0
     frame_elapsed = 0.0
     repeat_count = 0
+    action_index = 0
     previous_time = get_time()
     running = True
     while running:
@@ -106,17 +107,17 @@ def main():
         delta_time = current_time - previous_time
         previous_time = current_time
         running = handle_events()
-        frames = ANIMATIONS[0][1]
+        frames = ANIMATIONS[action_index][1]
         frame_index, frame_elapsed, repeat_count, completed = advance_frame(
             frame_index,
             frame_elapsed,
             delta_time,
             frames,
-            ANIMATIONS[0][2],
+            ANIMATIONS[action_index][2],
             repeat_count,
         )
         clear_canvas()
-        draw_frame(sprite_sheet, ANIMATIONS[0][1][frame_index])
+        draw_frame(sprite_sheet, ANIMATIONS[action_index][1][frame_index])
         update_canvas()
         delay(0.01)
 
