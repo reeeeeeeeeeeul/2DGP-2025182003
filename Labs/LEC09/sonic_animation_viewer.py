@@ -24,7 +24,12 @@ def resource_path(file_name):
 def make_row_frames(top, frame_count):
     source_y = SPRITE_SHEET_HEIGHT - top - FRAME_HEIGHT
     return [
-        (index * FRAME_WIDTH, source_y, FRAME_WIDTH, FRAME_HEIGHT)
+        (
+            index * FRAME_WIDTH,
+            source_y,
+            min(FRAME_WIDTH, SPRITE_SHEET_WIDTH - index * FRAME_WIDTH),
+            FRAME_HEIGHT,
+        )
         for index in range(frame_count)
     ]
 
