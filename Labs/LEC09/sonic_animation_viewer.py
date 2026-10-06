@@ -47,7 +47,6 @@ ANIMATIONS = [
 ]
 
 
-def handle_events():
 def validate_animations(sheet_width, sheet_height):
     if not ANIMATIONS:
         raise ValueError('애니메이션 동작이 정의되지 않았습니다.')
@@ -67,6 +66,7 @@ def validate_animations(sheet_width, sheet_height):
                 raise ValueError(f'{action_name} 동작이 이미지 위쪽을 벗어납니다.')
 
 
+def handle_events():
     for event in get_events():
         if event.type == SDL_QUIT:
             return False
