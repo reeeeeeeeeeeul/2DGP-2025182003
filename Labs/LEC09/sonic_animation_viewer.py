@@ -112,6 +112,48 @@ def advance_frame(
     return frame_index, frame_elapsed, repeat_count, completed
 
 
+def advance_animation(
+    delta_time,
+    state,
+    action_index,
+    frame_index,
+    repeat_count,
+    frame_elapsed,
+    wait_elapsed,
+):
+    if state == PLAYING:
+        frames = ANIMATIONS[action_index][1]
+        frame_index, frame_elapsed, repeat_count, completed = advance_frame(
+            frame_index,
+            frame_elapsed,
+            delta_time,
+            frames,
+            ANIMATIONS[action_index][2],
+            repeat_count,
+        )
+        if completed:
+            state = WAITING
+            wait_elapsed = 0.0
+    elif state == WAITING:
+        wait_elapsed += delta_time
+        if wait_elapsed >= WAIT_DURATION:
+            action_index = (action_index + 1) % len(ANIMATIONS)
+            frame_index = 0
+            frame_elapsed = 0.0
+            repeat_count = 0
+            wait_elapsed = 0.0
+            state = PLAYING
+
+    return (
+        state,
+        action_index,
+        frame_index,
+        repeat_count,
+        frame_elapsed,
+        wait_elapsed,
+    )
+
+
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     sprite_path = resource_path('sonic-sprite.png')
@@ -134,28 +176,22 @@ def main():
         delta_time = current_time - previous_time
         previous_time = current_time
         running = handle_events()
-        if state == PLAYING:
-            frames = ANIMATIONS[action_index][1]
-            frame_index, frame_elapsed, repeat_count, completed = advance_frame(
-                frame_index,
-                frame_elapsed,
-                delta_time,
-                frames,
-                ANIMATIONS[action_index][2],
-                repeat_count,
-            )
-            if completed:
-                state = WAITING
-                wait_elapsed = 0.0
-        elif state == WAITING:
-            wait_elapsed += delta_time
-            if wait_elapsed >= WAIT_DURATION:
-                action_index = (action_index + 1) % len(ANIMATIONS)
-                frame_index = 0
-                frame_elapsed = 0.0
-                repeat_count = 0
-                wait_elapsed = 0.0
-                state = PLAYING
+        (
+            state,
+            action_index,
+            frame_index,
+            repeat_count,
+            frame_elapsed,
+            wait_elapsed,
+        ) = advance_animation(
+            delta_time,
+            state,
+            action_index,
+            frame_index,
+            repeat_count,
+            frame_elapsed,
+            wait_elapsed,
+        )
         clear_canvas()
         draw_frame(sprite_sheet, ANIMATIONS[action_index][1][frame_index])
         update_canvas()
