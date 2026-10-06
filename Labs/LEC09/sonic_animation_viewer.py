@@ -100,6 +100,8 @@ def main():
     frame_elapsed = 0.0
     repeat_count = 0
     action_index = 0
+    state = PLAYING
+    wait_elapsed = 0.0
     previous_time = get_time()
     running = True
     while running:
@@ -107,15 +109,28 @@ def main():
         delta_time = current_time - previous_time
         previous_time = current_time
         running = handle_events()
-        frames = ANIMATIONS[action_index][1]
-        frame_index, frame_elapsed, repeat_count, completed = advance_frame(
-            frame_index,
-            frame_elapsed,
-            delta_time,
-            frames,
-            ANIMATIONS[action_index][2],
-            repeat_count,
-        )
+        if state == PLAYING:
+            frames = ANIMATIONS[action_index][1]
+            frame_index, frame_elapsed, repeat_count, completed = advance_frame(
+                frame_index,
+                frame_elapsed,
+                delta_time,
+                frames,
+                ANIMATIONS[action_index][2],
+                repeat_count,
+            )
+            if completed:
+                state = WAITING
+                wait_elapsed = 0.0
+        elif state == WAITING:
+            wait_elapsed += delta_time
+            if wait_elapsed >= WAIT_DURATION:
+                action_index = (action_index + 1) % len(ANIMATIONS)
+                frame_index = 0
+                frame_elapsed = 0.0
+                repeat_count = 0
+                wait_elapsed = 0.0
+                state = PLAYING
         clear_canvas()
         draw_frame(sprite_sheet, ANIMATIONS[action_index][1][frame_index])
         update_canvas()
