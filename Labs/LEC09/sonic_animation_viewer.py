@@ -80,15 +80,15 @@ def handle_events():
     return True
 
 
-def draw_frame(sprite_sheet, frame):
+def draw_frame(sprite_sheet, frame, position_x, position_y):
     source_x, source_y, source_width, source_height = frame
     sprite_sheet.clip_draw(
         source_x,
         source_y,
         source_width,
         source_height,
-        WINDOW_WIDTH // 2,
-        WINDOW_HEIGHT // 2,
+        position_x,
+        position_y,
         source_width * DISPLAY_SCALE,
         source_height * DISPLAY_SCALE,
     )
@@ -186,6 +186,7 @@ def main():
     action_index = 0
     state = PLAYING
     wait_elapsed = 0.0
+    position_x = CHARACTER_START_X
     previous_time = get_time()
     running = True
     while running:
@@ -209,8 +210,19 @@ def main():
             frame_elapsed,
             wait_elapsed,
         )
+        if state == PLAYING:
+            position_x = update_position(
+                position_x,
+                delta_time,
+                ANIMATIONS[action_index][3],
+            )
         clear_canvas()
-        draw_frame(sprite_sheet, ANIMATIONS[action_index][1][frame_index])
+        draw_frame(
+            sprite_sheet,
+            ANIMATIONS[action_index][1][frame_index],
+            position_x,
+            CHARACTER_Y,
+        )
         update_canvas()
         delay(0.01)
 
