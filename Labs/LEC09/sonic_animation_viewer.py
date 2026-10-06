@@ -51,6 +51,14 @@ def draw_frame(sprite_sheet, frame):
     )
 
 
+def advance_frame(frame_index, frame_elapsed, delta_time, frames, frame_duration):
+    frame_elapsed += delta_time
+    while frame_elapsed >= frame_duration:
+        frame_elapsed -= frame_duration
+        frame_index = (frame_index + 1) % len(frames)
+    return frame_index, frame_elapsed
+
+
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     sprite_path = resource_path('sonic-sprite.png')
@@ -67,8 +75,15 @@ def main():
         current_time = get_time()
         delta_time = current_time - previous_time
         previous_time = current_time
-        frame_elapsed += delta_time
         running = handle_events()
+        frames = ANIMATIONS[0][1]
+        frame_index, frame_elapsed = advance_frame(
+            frame_index,
+            frame_elapsed,
+            delta_time,
+            frames,
+            ANIMATIONS[0][2],
+        )
         clear_canvas()
         draw_frame(sprite_sheet, ANIMATIONS[0][1][frame_index])
         update_canvas()
