@@ -16,6 +16,8 @@ RUN_SPEED = 220.0
 BACK_SPEED = -100.0
 REPEAT_LIMIT = 5
 WAIT_DURATION = 1.0
+CHARACTER_START_X = WINDOW_WIDTH // 2
+CHARACTER_Y = WINDOW_HEIGHT // 2
 PLAYING = 'playing'
 WAITING = 'waiting'
 
@@ -90,6 +92,16 @@ def draw_frame(sprite_sheet, frame):
         source_width * DISPLAY_SCALE,
         source_height * DISPLAY_SCALE,
     )
+
+
+def update_position(position_x, delta_time, movement_speed):
+    position_x += movement_speed * delta_time
+    half_width = FRAME_WIDTH * DISPLAY_SCALE / 2
+    if position_x > WINDOW_WIDTH + half_width:
+        return -half_width
+    if position_x < -half_width:
+        return WINDOW_WIDTH + half_width
+    return position_x
 
 
 def advance_frame(
