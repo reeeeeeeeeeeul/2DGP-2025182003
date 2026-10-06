@@ -48,6 +48,25 @@ ANIMATIONS = [
 
 
 def handle_events():
+def validate_animations(sheet_width, sheet_height):
+    if not ANIMATIONS:
+        raise ValueError('애니메이션 동작이 정의되지 않았습니다.')
+
+    for action_name, frames, frame_duration in ANIMATIONS:
+        if not action_name or not frames:
+            raise ValueError('이름 또는 프레임이 없는 동작이 있습니다.')
+        if frame_duration <= 0:
+            raise ValueError(f'{action_name} 동작의 프레임 시간이 올바르지 않습니다.')
+
+        for source_x, source_y, source_width, source_height in frames:
+            if source_x < 0 or source_y < 0:
+                raise ValueError(f'{action_name} 동작에 음수 좌표가 있습니다.')
+            if source_x + source_width > sheet_width:
+                raise ValueError(f'{action_name} 동작이 이미지 오른쪽을 벗어납니다.')
+            if source_y + source_height > sheet_height:
+                raise ValueError(f'{action_name} 동작이 이미지 위쪽을 벗어납니다.')
+
+
     for event in get_events():
         if event.type == SDL_QUIT:
             return False
@@ -101,6 +120,7 @@ def main():
         raise FileNotFoundError(f'스프라이트 이미지를 찾을 수 없습니다: {sprite_path}')
 
     sprite_sheet = load_image(str(sprite_path))
+    validate_animations(sprite_sheet.w, sprite_sheet.h)
     frame_index = 0
     frame_elapsed = 0.0
     repeat_count = 0
