@@ -59,11 +59,18 @@ def main():
         raise FileNotFoundError(f'스프라이트 이미지를 찾을 수 없습니다: {sprite_path}')
 
     sprite_sheet = load_image(str(sprite_path))
+    frame_index = 0
+    frame_elapsed = 0.0
+    previous_time = get_time()
     running = True
     while running:
+        current_time = get_time()
+        delta_time = current_time - previous_time
+        previous_time = current_time
+        frame_elapsed += delta_time
         running = handle_events()
         clear_canvas()
-        draw_frame(sprite_sheet, ANIMATIONS[0][1][0])
+        draw_frame(sprite_sheet, ANIMATIONS[0][1][frame_index])
         update_canvas()
         delay(0.01)
 
