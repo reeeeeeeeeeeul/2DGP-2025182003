@@ -5,6 +5,11 @@ from pico2d import *
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 700
+DISPLAY_SCALE = 3
+FRAME_WIDTH = 40
+FRAME_HEIGHT = 50
+SPRITE_SHEET_WIDTH = 399
+SPRITE_SHEET_HEIGHT = 525
 
 
 def resource_path(file_name):
