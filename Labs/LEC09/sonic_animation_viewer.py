@@ -35,7 +35,7 @@ def make_row_frames(top, frame_height, x_ranges):
 
 
 ANIMATIONS = [
-    ('walk', make_row_frames(39, 39, [(index * 32, index * 32 + 31) for index in range(10)]), FRAME_DURATION),
+    ('walk', make_row_frames(39, 39, [(0, 29), (30, 57), (58, 87), (88, 117), (118, 147), (148, 179), (180, 207), (208, 239), (240, 269), (270, 293), (294, 330)]), FRAME_DURATION),
     ('run', make_row_frames(79, 39, [(8, 33), (37, 63), (65, 95), (97, 133), (135, 166), (170, 201), (206, 231), (238, 261), (263, 292), (295, 330), (334, 365), (370, 398)]), FRAME_DURATION),
     ('jump', make_row_frames(121, 43, [(1, 33), (39, 73), (89, 123), (130, 163), (181, 214), (228, 260)]), FRAME_DURATION),
     ('roll', make_row_frames(167, 33, [(1, 29), (35, 63), (67, 96), (98, 128), (131, 159), (162, 190), (193, 222), (230, 260), (268, 297)]), FRAME_DURATION),
