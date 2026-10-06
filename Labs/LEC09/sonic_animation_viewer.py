@@ -25,6 +25,12 @@ def handle_events():
 
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
+    sprite_path = resource_path('sonic-sprite.png')
+    if not sprite_path.exists():
+        close_canvas()
+        raise FileNotFoundError(f'스프라이트 이미지를 찾을 수 없습니다: {sprite_path}')
+
+    sprite_sheet = load_image(str(sprite_path))
     running = True
     while running:
         running = handle_events()
@@ -32,6 +38,7 @@ def main():
         update_canvas()
         delay(0.01)
 
+    del sprite_sheet
     close_canvas()
 
 
