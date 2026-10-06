@@ -14,6 +14,13 @@ def handle_events():
 
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
+    running = True
+    while running:
+        running = handle_events()
+        clear_canvas()
+        update_canvas()
+        delay(0.01)
+
     close_canvas()
 
 
