@@ -1,8 +1,14 @@
+from pathlib import Path
+
 from pico2d import *
 
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 700
+
+
+def resource_path(file_name):
+    return Path(__file__).resolve().parent / file_name
 
 
 def handle_events():
