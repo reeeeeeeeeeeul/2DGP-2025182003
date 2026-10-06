@@ -41,6 +41,20 @@ def draw_sprite_sheet(sprite_sheet):
     sprite_sheet.draw(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
 
 
+def draw_frame(sprite_sheet, frame):
+    source_x, source_y, source_width, source_height = frame
+    sprite_sheet.clip_draw(
+        source_x,
+        source_y,
+        source_width,
+        source_height,
+        WINDOW_WIDTH // 2,
+        WINDOW_HEIGHT // 2,
+        source_width * DISPLAY_SCALE,
+        source_height * DISPLAY_SCALE,
+    )
+
+
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     sprite_path = resource_path('sonic-sprite.png')
@@ -53,7 +67,7 @@ def main():
     while running:
         running = handle_events()
         clear_canvas()
-        draw_sprite_sheet(sprite_sheet)
+        draw_frame(sprite_sheet, ANIMATIONS[0][1][0])
         update_canvas()
         delay(0.01)
 
