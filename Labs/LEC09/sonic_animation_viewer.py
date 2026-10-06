@@ -11,6 +11,9 @@ FRAME_HEIGHT = 50
 SPRITE_SHEET_WIDTH = 399
 SPRITE_SHEET_HEIGHT = 525
 FRAME_DURATION = 0.12
+WALK_SPEED = 100.0
+RUN_SPEED = 220.0
+BACK_SPEED = -100.0
 REPEAT_LIMIT = 5
 WAIT_DURATION = 1.0
 PLAYING = 'playing'
@@ -35,15 +38,15 @@ def make_row_frames(top, frame_count):
 
 
 ANIMATIONS = [
-    ('run', make_row_frames(35, 10), FRAME_DURATION),
-    ('run_fast', make_row_frames(83, 10), FRAME_DURATION),
-    ('jump', make_row_frames(126, 7), FRAME_DURATION),
-    ('roll', make_row_frames(174, 8), FRAME_DURATION),
-    ('spin', make_row_frames(222, 6), FRAME_DURATION),
-    ('crouch', make_row_frames(271, 7), FRAME_DURATION),
-    ('fall', make_row_frames(319, 7), FRAME_DURATION),
-    ('back', make_row_frames(367, 7), FRAME_DURATION),
-    ('idle', make_row_frames(414, 8), FRAME_DURATION),
+    ('walk', make_row_frames(35, 10), FRAME_DURATION, WALK_SPEED),
+    ('run', make_row_frames(83, 10), FRAME_DURATION, RUN_SPEED),
+    ('jump', make_row_frames(126, 7), FRAME_DURATION, 0.0),
+    ('roll', make_row_frames(174, 8), FRAME_DURATION, 0.0),
+    ('spin', make_row_frames(222, 6), FRAME_DURATION, 0.0),
+    ('crouch', make_row_frames(271, 7), FRAME_DURATION, 0.0),
+    ('fall', make_row_frames(319, 7), FRAME_DURATION, 0.0),
+    ('back', make_row_frames(367, 7), FRAME_DURATION, BACK_SPEED),
+    ('idle', make_row_frames(414, 8), FRAME_DURATION, 0.0),
 ]
 
 
@@ -51,11 +54,13 @@ def validate_animations(sheet_width, sheet_height):
     if not ANIMATIONS:
         raise ValueError('애니메이션 동작이 정의되지 않았습니다.')
 
-    for action_name, frames, frame_duration in ANIMATIONS:
+    for action_name, frames, frame_duration, movement_speed in ANIMATIONS:
         if not action_name or not frames:
             raise ValueError('이름 또는 프레임이 없는 동작이 있습니다.')
         if frame_duration <= 0:
             raise ValueError(f'{action_name} 동작의 프레임 시간이 올바르지 않습니다.')
+        if not isinstance(movement_speed, (int, float)):
+            raise ValueError(f'{action_name} 동작의 이동 속도가 올바르지 않습니다.')
 
         for source_x, source_y, source_width, source_height in frames:
             if source_x < 0 or source_y < 0:
