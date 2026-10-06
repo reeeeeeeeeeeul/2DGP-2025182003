@@ -10,6 +10,7 @@ FRAME_WIDTH = 40
 FRAME_HEIGHT = 50
 SPRITE_SHEET_WIDTH = 399
 SPRITE_SHEET_HEIGHT = 525
+FRAME_DURATION = 0.12
 
 
 def resource_path(file_name):
@@ -22,6 +23,11 @@ def make_row_frames(top, frame_count):
         (index * FRAME_WIDTH, source_y, FRAME_WIDTH, FRAME_HEIGHT)
         for index in range(frame_count)
     ]
+
+
+ANIMATIONS = [
+    ('run', make_row_frames(35, 10), FRAME_DURATION),
+]
 
 
 def handle_events():
