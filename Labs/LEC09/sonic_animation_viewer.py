@@ -37,10 +37,6 @@ def handle_events():
     return True
 
 
-def draw_sprite_sheet(sprite_sheet):
-    sprite_sheet.draw(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
-
-
 def draw_frame(sprite_sheet, frame):
     source_x, source_y, source_width, source_height = frame
     sprite_sheet.clip_draw(
