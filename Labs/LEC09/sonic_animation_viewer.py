@@ -13,6 +13,9 @@ SPRITE_SHEET_HEIGHT = 525
 FRAME_DURATION = 0.12
 REPEAT_LIMIT = 5
 WAIT_DURATION = 1.0
+MOVE_SPEED = 220.0
+CHARACTER_START_X = WINDOW_WIDTH // 2
+CHARACTER_Y = WINDOW_HEIGHT // 2
 PLAYING = 'playing'
 WAITING = 'waiting'
 
@@ -66,25 +69,44 @@ def validate_animations(sheet_width, sheet_height):
                 raise ValueError(f'{action_name} 동작이 이미지 위쪽을 벗어납니다.')
 
 
-def handle_events():
+def handle_events(move_direction):
     for event in get_events():
         if event.type == SDL_QUIT:
-            return False
-    return True
+            return False, move_direction
+        if event.type == SDL_KEYDOWN:
+            if event.key == SDLK_LEFT:
+                move_direction = -1
+            elif event.key == SDLK_RIGHT:
+                move_direction = 1
+        elif event.type == SDL_KEYUP:
+            if event.key in (SDLK_LEFT, SDLK_RIGHT):
+                move_direction = 0
+    return True, move_direction
 
 
-def draw_frame(sprite_sheet, frame):
+def draw_frame(
+    sprite_sheet,
+    frame,
+    position_x=WINDOW_WIDTH // 2,
+    position_y=WINDOW_HEIGHT // 2,
+):
     source_x, source_y, source_width, source_height = frame
     sprite_sheet.clip_draw(
         source_x,
         source_y,
         source_width,
         source_height,
-        WINDOW_WIDTH // 2,
-        WINDOW_HEIGHT // 2,
+        position_x,
+        position_y,
         source_width / source_height * FRAME_HEIGHT * DISPLAY_SCALE,
         FRAME_HEIGHT * DISPLAY_SCALE,
     )
+
+
+def update_position(position_x, delta_time, move_direction):
+    half_width = FRAME_WIDTH * DISPLAY_SCALE / 2
+    position_x += move_direction * MOVE_SPEED * delta_time
+    return max(half_width, min(WINDOW_WIDTH - half_width, position_x))
 
 
 def advance_frame(
@@ -169,13 +191,16 @@ def main():
     action_index = 0
     state = PLAYING
     wait_elapsed = 0.0
+    position_x = CHARACTER_START_X
+    move_direction = 0
     previous_time = get_time()
     running = True
     while running:
         current_time = get_time()
         delta_time = current_time - previous_time
         previous_time = current_time
-        running = handle_events()
+        running, move_direction = handle_events(move_direction)
+        position_x = update_position(position_x, delta_time, move_direction)
         (
             state,
             action_index,
@@ -193,7 +218,12 @@ def main():
             wait_elapsed,
         )
         clear_canvas()
-        draw_frame(sprite_sheet, ANIMATIONS[action_index][1][frame_index])
+        draw_frame(
+            sprite_sheet,
+            ANIMATIONS[action_index][1][frame_index],
+            position_x,
+            CHARACTER_Y,
+        )
         update_canvas()
         delay(0.01)
 
