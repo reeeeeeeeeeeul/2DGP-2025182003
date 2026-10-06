@@ -23,6 +23,10 @@ def handle_events():
     return True
 
 
+def draw_sprite_sheet(sprite_sheet):
+    sprite_sheet.draw(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
+
+
 def main():
     open_canvas(WINDOW_WIDTH, WINDOW_HEIGHT)
     sprite_path = resource_path('sonic-sprite.png')
@@ -35,6 +39,7 @@ def main():
     while running:
         running = handle_events()
         clear_canvas()
+        draw_sprite_sheet(sprite_sheet)
         update_canvas()
         delay(0.01)
 
