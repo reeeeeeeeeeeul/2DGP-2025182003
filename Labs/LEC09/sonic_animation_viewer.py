@@ -11,9 +11,9 @@ FRAME_HEIGHT = 50
 SPRITE_SHEET_WIDTH = 399
 SPRITE_SHEET_HEIGHT = 525
 FRAME_DURATION = 0.12
-WALK_SPEED = 100.0
-RUN_SPEED = 220.0
-BACK_SPEED = -100.0
+WALK_SPEED = 45.0
+RUN_SPEED = 90.0
+BACK_SPEED = -45.0
 REPEAT_LIMIT = 5
 WAIT_DURATION = 1.0
 CHARACTER_START_X = WINDOW_WIDTH // 2
@@ -89,7 +89,7 @@ def draw_frame(sprite_sheet, frame, position_x, position_y):
         source_height,
         position_x,
         position_y,
-        source_width * DISPLAY_SCALE,
+        FRAME_WIDTH * DISPLAY_SCALE,
         source_height * DISPLAY_SCALE,
     )
 
@@ -188,6 +188,7 @@ def main():
     wait_elapsed = 0.0
     position_x = CHARACTER_START_X
     previous_time = get_time()
+    previous_action_index = action_index
     running = True
     while running:
         current_time = get_time()
@@ -210,6 +211,9 @@ def main():
             frame_elapsed,
             wait_elapsed,
         )
+        if action_index != previous_action_index:
+            position_x = CHARACTER_START_X
+            previous_action_index = action_index
         if state == PLAYING:
             position_x = update_position(
                 position_x,
