@@ -55,12 +55,29 @@ def draw_frame(sprite_sheet, frame):
     )
 
 
-def advance_frame(frame_index, frame_elapsed, delta_time, frames, frame_duration):
+def advance_frame(
+    frame_index,
+    frame_elapsed,
+    delta_time,
+    frames,
+    frame_duration,
+    repeat_count,
+):
+    completed = False
     frame_elapsed += delta_time
     while frame_elapsed >= frame_duration:
         frame_elapsed -= frame_duration
-        frame_index = (frame_index + 1) % len(frames)
-    return frame_index, frame_elapsed
+        if frame_index < len(frames) - 1:
+            frame_index += 1
+            continue
+
+        repeat_count += 1
+        if repeat_count < REPEAT_LIMIT:
+            frame_index = 0
+        else:
+            completed = True
+            break
+    return frame_index, frame_elapsed, repeat_count, completed
 
 
 def main():
@@ -73,6 +90,7 @@ def main():
     sprite_sheet = load_image(str(sprite_path))
     frame_index = 0
     frame_elapsed = 0.0
+    repeat_count = 0
     previous_time = get_time()
     running = True
     while running:
@@ -81,12 +99,13 @@ def main():
         previous_time = current_time
         running = handle_events()
         frames = ANIMATIONS[0][1]
-        frame_index, frame_elapsed = advance_frame(
+        frame_index, frame_elapsed, repeat_count, completed = advance_frame(
             frame_index,
             frame_elapsed,
             delta_time,
             frames,
             ANIMATIONS[0][2],
+            repeat_count,
         )
         clear_canvas()
         draw_frame(sprite_sheet, ANIMATIONS[0][1][frame_index])
