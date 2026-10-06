@@ -21,29 +21,29 @@ def resource_path(file_name):
     return Path(__file__).resolve().parent / file_name
 
 
-def make_row_frames(top, frame_count, frame_height):
+def make_row_frames(top, frame_height, x_ranges):
     source_y = SPRITE_SHEET_HEIGHT - top - frame_height
     return [
         (
-            index * FRAME_WIDTH,
+            left,
             source_y,
-            min(FRAME_WIDTH, SPRITE_SHEET_WIDTH - index * FRAME_WIDTH),
+            right - left + 1,
             frame_height,
         )
-        for index in range(frame_count)
+        for left, right in x_ranges
     ]
 
 
 ANIMATIONS = [
-    ('walk', make_row_frames(39, 10, 39), FRAME_DURATION),
-    ('run', make_row_frames(79, 10, 39), FRAME_DURATION),
-    ('jump', make_row_frames(121, 7, 43), FRAME_DURATION),
-    ('roll', make_row_frames(167, 8, 33), FRAME_DURATION),
-    ('spin', make_row_frames(206, 6, 27), FRAME_DURATION),
-    ('crouch', make_row_frames(238, 7, 36), FRAME_DURATION),
-    ('fall', make_row_frames(283, 7, 35), FRAME_DURATION),
-    ('back', make_row_frames(326, 7, 45), FRAME_DURATION),
-    ('idle', make_row_frames(377, 8, 40), FRAME_DURATION),
+    ('walk', make_row_frames(39, 39, [(index * 32, index * 32 + 31) for index in range(10)]), FRAME_DURATION),
+    ('run', make_row_frames(79, 39, [(8, 33), (37, 63), (65, 95), (97, 133), (135, 166), (170, 201), (206, 231), (238, 261), (263, 292), (295, 330), (334, 365), (370, 398)]), FRAME_DURATION),
+    ('jump', make_row_frames(121, 43, [(1, 33), (39, 73), (89, 123), (130, 163), (181, 214), (228, 260)]), FRAME_DURATION),
+    ('roll', make_row_frames(167, 33, [(1, 29), (35, 63), (67, 96), (98, 128), (131, 159), (162, 190), (193, 222), (230, 260), (268, 297)]), FRAME_DURATION),
+    ('spin', make_row_frames(206, 27, [(1, 30), (36, 64), (70, 98), (105, 133), (139, 167), (174, 202)]), FRAME_DURATION),
+    ('crouch', make_row_frames(238, 36, [(1, 29), (36, 65), (74, 104), (111, 141), (149, 178), (186, 216)]), FRAME_DURATION),
+    ('fall', make_row_frames(283, 35, [(1, 29), (36, 65), (72, 110), (123, 161), (172, 210), (218, 255)]), FRAME_DURATION),
+    ('back', make_row_frames(326, 45, [(1, 24), (31, 59), (65, 84), (90, 114), (119, 143), (149, 168), (184, 223), (232, 270)]), FRAME_DURATION),
+    ('idle', make_row_frames(377, 40, [(1, 27), (31, 61), (64, 94), (99, 131), (136, 167), (176, 208), (217, 249), (254, 286)]), FRAME_DURATION),
 ]
 
 
@@ -82,8 +82,8 @@ def draw_frame(sprite_sheet, frame):
         source_height,
         WINDOW_WIDTH // 2,
         WINDOW_HEIGHT // 2,
-        FRAME_WIDTH * DISPLAY_SCALE,
-        source_height * DISPLAY_SCALE,
+        source_width / source_height * FRAME_HEIGHT * DISPLAY_SCALE,
+        FRAME_HEIGHT * DISPLAY_SCALE,
     )
 
 
