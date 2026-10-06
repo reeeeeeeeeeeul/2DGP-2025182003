@@ -31,6 +31,14 @@ def make_row_frames(top, frame_count):
 
 ANIMATIONS = [
     ('run', make_row_frames(35, 10), FRAME_DURATION),
+    ('run_fast', make_row_frames(83, 10), FRAME_DURATION),
+    ('jump', make_row_frames(126, 7), FRAME_DURATION),
+    ('roll', make_row_frames(174, 8), FRAME_DURATION),
+    ('spin', make_row_frames(222, 6), FRAME_DURATION),
+    ('crouch', make_row_frames(271, 7), FRAME_DURATION),
+    ('fall', make_row_frames(319, 7), FRAME_DURATION),
+    ('back', make_row_frames(367, 7), FRAME_DURATION),
+    ('idle', make_row_frames(414, 8), FRAME_DURATION),
 ]
 
 
