@@ -16,6 +16,14 @@ def resource_path(file_name):
     return Path(__file__).resolve().parent / file_name
 
 
+def make_row_frames(top, frame_count):
+    source_y = SPRITE_SHEET_HEIGHT - top - FRAME_HEIGHT
+    return [
+        (index * FRAME_WIDTH, source_y, FRAME_WIDTH, FRAME_HEIGHT)
+        for index in range(frame_count)
+    ]
+
+
 def handle_events():
     for event in get_events():
         if event.type == SDL_QUIT:
